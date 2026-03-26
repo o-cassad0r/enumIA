@@ -1,119 +1,258 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RECON-OPS | @@{DOM}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
     <style>
-        :root { 
-            --bg: #0f172a; 
-            --card: rgba(30, 41, 59, 0.7); 
-            --border: #334155; 
-            --cyan: #0ea5e9; 
+        :root {
+            --bg: #0f172a;
+            --card: rgba(30, 41, 59, 0.7);
+            --border: #334155;
+            --cyan: #0ea5e9;
             --cyan-glow: rgba(14, 165, 233, 0.2);
-            --green: #10b981; 
-            --red: #ef4444; 
+            --green: #10b981;
+            --red: #ef4444;
             --text-main: #94a3b8;
             --text-bright: #f8fafc;
         }
 
-        body { 
-            background-color: var(--bg); color: var(--text-main); font-family: 'Inter', sans-serif; 
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
             background-image: radial-gradient(var(--border) 1px, transparent 1px);
-            background-size: 30px 30px; min-height: 100vh;
+            background-size: 30px 30px;
+            min-height: 100vh;
         }
 
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        .text-cyan { color: var(--cyan) !important; }
-        .text-green { color: var(--green) !important; }
-        .text-bright { color: var(--text-bright) !important; }
-        .text-red { color: var(--red) !important; }
-        .text-warning { color: #f59e0b !important; }
-        .border-warning { border-color: #f59e0b !important; }
-        .bg-warning { background-color: #f59e0b !important; }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .text-cyan {
+            color: var(--cyan) !important;
+        }
+
+        .text-green {
+            color: var(--green) !important;
+        }
+
+        .text-bright {
+            color: var(--text-bright) !important;
+        }
+
+        .text-red {
+            color: var(--red) !important;
+        }
+
+        .text-warning {
+            color: #f59e0b !important;
+        }
+
+        .border-warning {
+            border-color: #f59e0b !important;
+        }
+
+        .bg-warning {
+            background-color: #f59e0b !important;
+        }
 
         /* Cards Estilizados com Glassmorphism */
-        .f-card { 
-            background: var(--card); backdrop-filter: blur(12px) saturate(150%); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border); border-top: 3px solid var(--cyan); 
-            border-radius: 8px; margin-bottom: 20px; 
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        .f-card {
+            background: var(--card);
+            backdrop-filter: blur(12px) saturate(150%);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--cyan);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .f-card:hover { box-shadow: 0 10px 30px var(--cyan-glow); transform: translateY(-3px); border-color: var(--cyan); }
+
+        .f-card:hover {
+            box-shadow: 0 10px 30px var(--cyan-glow);
+            transform: translateY(-3px);
+            border-color: var(--cyan);
+        }
 
         /* NavegaÃ§Ã£o Suave */
-        .nav-tabs { border-bottom: 1px solid var(--border); gap: 5px; }
-        .nav-link { 
-            color: var(--text-main); border: 1px solid transparent !important; 
-            border-radius: 8px 8px 0 0 !important; font-weight: 600; padding: 12px 24px;
+        .nav-tabs {
+            border-bottom: 1px solid var(--border);
+            gap: 5px;
+        }
+
+        .nav-link {
+            color: var(--text-main);
+            border: 1px solid transparent !important;
+            border-radius: 8px 8px 0 0 !important;
+            font-weight: 600;
+            padding: 12px 24px;
             transition: all 0.3s ease;
         }
-        .nav-link:hover { color: var(--cyan); background: rgba(30, 41, 59, 0.4); }
-        .nav-link.active { 
-            background: var(--card) !important; color: var(--cyan) !important; 
-            border-color: var(--border) var(--border) transparent var(--border) !important; 
-            box-shadow: inset 0 3px 0 var(--cyan); backdrop-filter: blur(10px);
+
+        .nav-link:hover {
+            color: var(--cyan);
+            background: rgba(30, 41, 59, 0.4);
         }
-        .tab-pane { transition: opacity 0.4s ease-in-out; }
+
+        .nav-link.active {
+            background: var(--card) !important;
+            color: var(--cyan) !important;
+            border-color: var(--border) var(--border) transparent var(--border) !important;
+            box-shadow: inset 0 3px 0 var(--cyan);
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-pane {
+            transition: opacity 0.4s ease-in-out;
+        }
 
         /* Terminal Mac-Style */
         .terminal-wrapper {
-            background: #020617; border: 1px solid var(--border); border-radius: 8px;
-            overflow: hidden; box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+            background: #020617;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6);
         }
+
         .terminal-header {
-            background: var(--card); border-bottom: 1px solid var(--border);
-            padding: 8px 15px; font-size: 0.8rem; display: flex; align-items: center; gap: 8px;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 15px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             backdrop-filter: blur(10px);
         }
-        .terminal-header .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
-        .dot.bg-danger { background-color: #ff5f56 !important; }
-        .dot.bg-warning { background-color: #ffbd2e !important; }
-        .dot.bg-success { background-color: #27c93f !important; }
-        
-        .terminal { 
-            background: transparent; color: var(--green); padding: 15px; 
-            font-size: 0.80rem; margin: 0; overflow-x: auto; line-height: 1.6;
-            max-height: 350px; overflow-y: auto;
+
+        .terminal-header .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot.bg-danger {
+            background-color: #ff5f56 !important;
+        }
+
+        .dot.bg-warning {
+            background-color: #ffbd2e !important;
+        }
+
+        .dot.bg-success {
+            background-color: #27c93f !important;
+        }
+
+        .terminal {
+            background: transparent;
+            color: var(--green);
+            padding: 15px;
+            font-size: 0.80rem;
+            margin: 0;
+            overflow-x: auto;
+            line-height: 1.6;
+            max-height: 350px;
+            overflow-y: auto;
         }
 
         /* Badges */
-        .tech-badge { 
-            background: rgba(14, 165, 233, 0.1); border: 1px solid var(--cyan); 
-            color: var(--cyan); padding: 4px 10px; font-size: 0.75rem; 
-            margin: 3px; border-radius: 6px; display: inline-flex; align-items: center; gap: 5px;
+        .tech-badge {
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            margin: 3px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
-        .badge-dns { font-size: 0.65rem; padding: 5px 8px; border-radius: 4px; text-transform: uppercase; }
+
+        .badge-dns {
+            font-size: 0.65rem;
+            padding: 5px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
 
         /* Lightbox & Imagens */
-        .screenshot-img { width: 100%; border: 1px solid var(--border); border-radius: 6px; cursor: zoom-in; transition: transform 0.2s; }
-        .screenshot-img:hover { transform: scale(1.03); border-color: var(--cyan); }
-        
-        #lightbox {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(8px); z-index: 9999;
-            justify-content: center; align-items: center; cursor: zoom-out;
+        .screenshot-img {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s;
         }
-        #lightbox img { max-width: 90%; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,0.8); border: 1px solid var(--border); }
+
+        .screenshot-img:hover {
+            transform: scale(1.03);
+            border-color: var(--cyan);
+        }
+
+        #lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--border);
+        }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--cyan);
+        }
     </style>
 </head>
+
 <body class="p-4 container-fluid">
 
     <header class="mb-5 border-bottom border-secondary pb-3 d-flex justify-content-between align-items-center">
         <div>
             <h1 class="h3 mono text-bright mb-1"><i class="bi bi-radar text-cyan me-2"></i>[ RECON: @@{DOM} ]</h1>
-            <small class="text-main mono"><i class="bi bi-clock me-1"></i>TIME: @@{SCAN_TIME} &nbsp;|&nbsp; <i class="bi bi-geo-alt me-1"></i>IP: @@{MAIN_IP}</small>
+            <small class="text-main mono"><i class="bi bi-clock me-1"></i>TIME: @@{SCAN_TIME} &nbsp;|&nbsp; <i
+                    class="bi bi-geo-alt me-1"></i>IP: @@{MAIN_IP}</small>
         </div>
         <div class="text-end">
             <span class="badge border border-danger text-danger bg-transparent p-2 fs-6 rounded-pill mono">
@@ -130,13 +269,15 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="f-card p-4 h-100 d-flex flex-column justify-content-center" style="border-top-color: var(--green);">
+            <div class="f-card p-4 h-100 d-flex flex-column justify-content-center"
+                style="border-top-color: var(--green);">
                 <small class="text-main fw-bold">HOSTS VIVOS</small>
                 <h2 class="mono text-green mt-2 mb-0">@@{TOTAL_VIVOS}</h2>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="f-card p-3 h-100 d-flex flex-column justify-content-center align-items-center" style="border-top-color: var(--red);">
+            <div class="f-card p-3 h-100 d-flex flex-column justify-content-center align-items-center"
+                style="border-top-color: var(--red);">
                 <small class="text-main fw-bold mb-2"><i class="bi bi-pie-chart me-1"></i> SEVERIDADE</small>
                 <div style="position: relative; height: 100px; width: 100%;">
                     <canvas id="vulnChart"></canvas>
@@ -144,8 +285,10 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="f-card p-4 h-100 text-start overflow-auto" style="border-top-color: var(--text-main); max-height: 160px;">
-                <small class="text-main fw-bold d-block mb-2"><i class="bi bi-lightbulb me-1"></i> RECOMENDAÃ‡Ã•ES</small>
+            <div class="f-card p-4 h-100 text-start overflow-auto"
+                style="border-top-color: var(--text-main); max-height: 160px;">
+                <small class="text-main fw-bold d-block mb-2"><i class="bi bi-lightbulb me-1"></i>
+                    RECOMENDAÃ‡Ã•ES</small>
                 <div class="text-bright small">@@{RECOMMENDATIONS}</div>
             </div>
         </div>
@@ -153,24 +296,37 @@
 
     <ul class="nav nav-tabs mb-4" id="reconTabs" role="tablist">
         <li class="nav-item">
-            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#infra"><i class="bi bi-hdd-network me-2"></i>Infra & DNS</button>
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#infra"><i
+                    class="bi bi-hdd-network me-2"></i>Infra & DNS</button>
         </li>
         <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#osint"><i class="bi bi-globe2 me-2"></i>OSINT & Cloud</button>
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#osint"><i class="bi bi-globe2 me-2"></i>OSINT
+                & Cloud</button>
         </li>
         <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#deep-intel"><i class="bi bi-incognito me-2"></i>Deep Intel</button>
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#deep-intel"><i
+                    class="bi bi-incognito me-2"></i>Deep Intel</button>
         </li>
         <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#vulns"><i class="bi bi-bug me-2"></i>Vulnerabilidades</button>
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#vulns"><i
+                    class="bi bi-bug me-2"></i>Vulnerabilidades</button>
         </li>
         <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#visual"><i class="bi bi-images me-2"></i>EvidÃªncia Visual</button>
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#vhosts"><i
+                    class="bi bi-diagram-2 me-2"></i>Virtual Hosts</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#advanced"><i
+                    class="bi bi-shield-slash me-2"></i>Advanced Attack Surface</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#visual"><i
+                    class="bi bi-images me-2"></i>Evidência Visual</button>
         </li>
     </ul>
 
     <div class="tab-content" id="reconTabsContent">
-        
+
         <div class="tab-pane fade show active" id="infra">
             <div class="row g-4">
                 <div class="col-lg-8">
@@ -192,7 +348,8 @@
                     <h6 class="mono text-cyan mt-5 mb-3"><i class="bi bi-info-square me-2"></i>WHOIS & INFRA</h6>
                     <div class="terminal-wrapper mb-3">
                         <div class="terminal-header">
-                            <span class="dot bg-danger"></span><span class="dot bg-warning"></span><span class="dot bg-success"></span>
+                            <span class="dot bg-danger"></span><span class="dot bg-warning"></span><span
+                                class="dot bg-success"></span>
                             <span class="ms-2 mono">infrastructure_map.log</span>
                         </div>
                         <pre class="terminal text-bright">@@{WHOIS_DATA}</pre>
@@ -215,11 +372,15 @@
             <div class="row g-4">
                 <div class="col-md-6">
                     <h6 class="mono text-cyan mb-3"><i class="bi bi-diagram-3 me-2"></i>ASN & NETWORK INFO</h6>
-                    <div class="terminal-wrapper"><pre class="terminal">@@{ASN_DATA}</pre></div>
+                    <div class="terminal-wrapper">
+                        <pre class="terminal">@@{ASN_DATA}</pre>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <h6 class="mono text-cyan mb-3"><i class="bi bi-flag me-2"></i>TAKEOVER ANALYSIS</h6>
-                    <div class="terminal-wrapper"><pre class="terminal text-warning">@@{TAKEOVER}</pre></div>
+                    <div class="terminal-wrapper">
+                        <pre class="terminal text-warning">@@{TAKEOVER}</pre>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <h6 class="mono text-red mb-3"><i class="bi bi-file-earmark-lock me-2"></i>SENSITIVE DOCUMENTS</h6>
@@ -231,16 +392,22 @@
         <div class="tab-pane fade" id="deep-intel">
             <div class="row g-4">
                 <div class="col-md-6">
-                    <h6 class="mono text-cyan mb-3"><i class="bi bi-cloud-haze2 me-2"></i>CLOUD BUCKETS (AWS/AZURE/GCP)</h6>
-                    <div class="terminal-wrapper"><pre class="terminal">@@{CLOUD_ASSETS}</pre></div>
+                    <h6 class="mono text-cyan mb-3"><i class="bi bi-cloud-haze2 me-2"></i>CLOUD BUCKETS (AWS/AZURE/GCP)
+                    </h6>
+                    <div class="terminal-wrapper">
+                        <pre class="terminal">@@{CLOUD_ASSETS}</pre>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <h6 class="mono text-warning mb-3"><i class="bi bi-key me-2"></i>JS SECRETS & API KEYS</h6>
                     <div class="f-card p-3 small mono" style="max-height: 400px; overflow-y: auto;">@@{JS_SECRETS}</div>
                 </div>
                 <div class="col-md-12">
-                    <h6 class="mono text-green mb-3"><i class="bi bi-braces-asterisk me-2"></i>PARAMETER MAPPING (URLS)</h6>
-                    <div class="terminal-wrapper"><pre class="terminal">@@{PARAMS}</pre></div>
+                    <h6 class="mono text-green mb-3"><i class="bi bi-braces-asterisk me-2"></i>PARAMETER MAPPING (URLS)
+                    </h6>
+                    <div class="terminal-wrapper">
+                        <pre class="terminal">@@{PARAMS}</pre>
+                    </div>
                 </div>
             </div>
         </div>
@@ -249,22 +416,61 @@
             <h6 class="mono text-danger mb-3"><i class="bi bi-activity me-2"></i>NUCLEI & NMAP SCAN RESULTS</h6>
             <div class="terminal-wrapper border-danger">
                 <div class="terminal-header border-danger">
-                    <span class="dot bg-danger"></span><span class="ms-2 mono text-danger text-uppercase">Security Analysis</span>
+                    <span class="dot bg-danger"></span><span class="ms-2 mono text-danger text-uppercase">Security
+                        Analysis</span>
                 </div>
                 <pre class="terminal text-danger">@@{NUCLEI_LOG}</pre>
             </div>
 
-            <h6 class="mono text-warning mt-4 mb-3"><i class="bi bi-shield-exclamation me-2"></i>NMAP CVE & BANNER MAPPING</h6>
+            <h6 class="mono text-warning mt-4 mb-3"><i class="bi bi-shield-exclamation me-2"></i>NMAP CVE & BANNER
+                MAPPING</h6>
             <div class="terminal-wrapper border-warning">
                 <div class="terminal-header border-warning">
-                    <span class="dot bg-warning"></span><span class="ms-2 mono text-warning text-uppercase">Nmap Vulners Service Analysis</span>
+                    <span class="dot bg-warning"></span><span class="ms-2 mono text-warning text-uppercase">Nmap Vulners
+                        Service Analysis</span>
                 </div>
                 <pre class="terminal text-warning">@@{NMAP_CVE_LOG}</pre>
             </div>
         </div>
 
+        <div class="tab-pane fade" id="vhosts">
+            <h6 class="mono text-cyan mb-3"><i class="bi bi-diagram-2 me-2"></i>VIRTUAL HOSTS DISCOVERY</h6>
+            <div class="terminal-wrapper">
+                <pre class="terminal">@@{VHOSTS}</pre>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="advanced">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h6 class="mono text-cyan mb-3"><i class="bi bi-door-open me-2"></i>FAST PORT SCAN (NAABU)</h6>
+                    <div class="terminal-wrapper">
+                        <pre class="terminal">@@{NAABU}</pre>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="mono text-danger mb-3"><i class="bi bi-bug me-2"></i>BLIND XSS SCAN (DALFOX)</h6>
+                    <div class="terminal-wrapper border-danger">
+                        <pre class="terminal text-danger">@@{DALFOX}</pre>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="mono text-cyan mb-3"><i class="bi bi-diagram-3 me-2"></i>TLS SANs & EDGE (TLSX)</h6>
+                    <div class="terminal-wrapper">
+                        <pre class="terminal">@@{TLSX}</pre>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="mono text-warning mb-3"><i class="bi bi-lightning me-2"></i>CRLF INJECTION (CRLFUZZ)</h6>
+                    <div class="terminal-wrapper border-warning">
+                        <pre class="terminal text-warning">@@{CRLFUZZ}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="tab-pane fade" id="visual">
-            <h6 class="mono text-cyan mb-4"><i class="bi bi-camera me-2"></i>EVIDÃŠNCIAS VISUAIS (SCREENSHOTS)</h6>
+            <h6 class="mono text-cyan mb-4"><i class="bi bi-camera me-2"></i>EVIDÊNCIAS VISUAIS (SCREENSHOTS)</h6>
             <div class="row g-4">
                 @@{SCREENSHOT_GALLERY}
             </div>
@@ -278,25 +484,25 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Lightbox Interativo
             document.querySelectorAll('.screenshot-img').forEach(img => {
-                img.addEventListener('click', function() {
+                img.addEventListener('click', function () {
                     document.getElementById('lightbox-img').src = this.src;
                     document.getElementById('lightbox').style.display = 'flex';
                 });
             });
 
             const ctx = document.getElementById('vulnChart').getContext('2d');
-            
+
             // VariÃ¡veis injetadas pelo Python (Reporter.py)
-            const crit = @@{VULN_CRIT} || 0;
-            const high = @@{VULN_HIGH} || 0;
-            const med  = @@{VULN_MED}  || 0;
-            const low  = @@{VULN_LOW}  || 0;
-            const info = @@{VULN_INFO} || 0;
+            const crit = @@{ VULN_CRIT } || 0;
+            const high = @@{ VULN_HIGH } || 0;
+            const med = @@{ VULN_MED } || 0;
+            const low = @@{ VULN_LOW } || 0;
+            const info = @@{ VULN_INFO } || 0;
 
             new Chart(ctx, {
                 type: 'doughnut',
@@ -319,4 +525,5 @@
         });
     </script>
 </body>
+
 </html>

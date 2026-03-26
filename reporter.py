@@ -10,6 +10,7 @@ Dependência externa: pip install aiofiles
 # SESSÃO A — Estrutura de dados (dataclasses + Path)
 # ─────────────────────────────────────────────────────────────────────────────
 import asyncio
+import logging
 import os
 import string
 import sys
@@ -18,6 +19,14 @@ from datetime import datetime
 from pathlib import Path
 
 import aiofiles  # pip install aiofiles
+
+# Configuração de Logging (python-pro)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[logging.StreamHandler(sys.stderr)],
+)
+log = logging.getLogger(__name__)
 
 
 # ── A1. Caminhos ─────────────────────────────────────────────────────────────
@@ -40,7 +49,12 @@ class ReconPaths:
     params:      Path = field(init=False)
     files_found: Path = field(init=False)
     js_secrets:  Path = field(init=False)
+    vhosts_dir:  Path = field(init=False)
     nmap_dir:    Path = field(init=False)
+    naabu:       Path = field(init=False)
+    dalfox:      Path = field(init=False)
+    tlsx:        Path = field(init=False)
+    crlfuzz:     Path = field(init=False)
 
     def __post_init__(self) -> None:
         w = self.workdir
@@ -56,7 +70,12 @@ class ReconPaths:
         self.params       = w / "param_discovery.txt"
         self.files_found  = w / "interesting_files.txt"
         self.js_secrets   = w / "js_secrets"
+        self.vhosts_dir   = w / "vhosts"
         self.nmap_dir     = w / "nmap"
+        self.naabu        = w / "naabu_ports.txt"
+        self.dalfox       = w / "dalfox" / "xss_results.txt"
+        self.tlsx         = w / "edge" / "tlsx_sans.txt"
+        self.crlfuzz      = w / "edge" / "crlfuzz_results.txt"
 
 
 # ── A2. Modelo de dados do relatório ─────────────────────────────────────────
@@ -93,7 +112,14 @@ class ReconReport:
     reverse_dns:      str = "Nenhum registro reverso (PTR) encontrado."
     cloud_assets:     str = "Nenhum bucket S3/Azure/GCP detectado."
     js_secrets:       str = "Nenhuma credencial exposta em arquivos JS."
+    vhosts:           str = "Nenhum Virtual Host identificado."
     params:           str = "Nenhum parâmetro minerado para o alvo."
+
+    # Advanced Attack Surface
+    naabu:            str = "Nenhuma porta atípica encontrada pelo Naabu."
+    dalfox:           str = "Nenhum XSS detectado."
+    tlsx:             str = "Nenhum SAN adicional descoberto."
+    crlfuzz:          str = "Nenhuma injeção CRLF detectada."
 
     # Injeção via env vars (Bash → Python)
     dns_table:          str = "<tr><td colspan='2'>Sem registros DNS</td></tr>"
@@ -112,6 +138,7 @@ async def async_read(path: Path, default: str = "Nenhum dado encontrado.") -> st
             async with aiofiles.open(path, errors="ignore") as f:
                 return (await f.read()).strip()
     except Exception as exc:
+        log.warning(f"Erro ao ler arquivo {path}: {exc}")
         return f"Erro ao ler arquivo: {exc}"
     return default
 
@@ -193,6 +220,25 @@ async def _read_js_secrets_dir(js_dir: Path) -> str:
     return "".join(found) if found else "Nenhuma credencial exposta em arquivos JS."
 
 
+async def _read_vhosts_dir(vhosts_dir: Path) -> str:
+    """Lê todos os arquivos de vhosts em paralelo e retorna string consolidada."""
+    if not vhosts_dir.is_dir():
+        return "Nenhum Virtual Host identificado."
+
+    files = [f for f in vhosts_dir.iterdir() if f.is_file()]
+    if not files:
+        return "Nenhum Virtual Host identificado."
+
+    contents = await asyncio.gather(*(async_read(f, "") for f in files))
+    
+    found = []
+    for f, c in zip(files, contents):
+        if c:
+            found.append(f"--- [ {f.name} ] ---\n{c}\n")
+    
+    return "\n".join(found) if found else "Nenhum Virtual Host identificado."
+
+
 async def collect_data(paths: ReconPaths, dom: str) -> ReconReport:
     """
     Lança todas as leituras de arquivo em paralelo com asyncio.gather
@@ -204,7 +250,8 @@ async def collect_data(paths: ReconPaths, dom: str) -> ReconReport:
         rdns_raw, cloud_raw, asn_raw,
         takeover_raw, params_raw,
         hosts_dns_raw, hosts_vivos_raw,
-        files_raw,
+        files_raw, naabu_raw, dalfox_raw,
+        tlsx_raw, crlfuzz_raw,
     ) = await asyncio.gather(
         async_read(paths.ips,          "N/A"),
         async_read(paths.whois,        "Sem dados de WHOIS."),
@@ -217,12 +264,17 @@ async def collect_data(paths: ReconPaths, dom: str) -> ReconReport:
         async_read(paths.hosts_dns,    ""),
         async_read(paths.hosts_vivos,  ""),
         async_read(paths.files_found,  ""),
+        async_read(paths.naabu,        "Nenhuma porta atípica encontrada pelo Naabu."),
+        async_read(paths.dalfox,       "Nenhum XSS detectado."),
+        async_read(paths.tlsx,         "Nenhum SAN adicional descoberto."),
+        async_read(paths.crlfuzz,      "Nenhuma injeção CRLF detectada."),
     )
 
     # Diretórios com múltiplos arquivos (paralelos entre si)
-    nmap_files, js_secrets_html = await asyncio.gather(
+    nmap_files, js_secrets_html, vhosts_raw = await asyncio.gather(
         _read_nmap_dir(paths.nmap_dir),
         _read_js_secrets_dir(paths.js_secrets),
+        _read_vhosts_dir(paths.vhosts_dir),
     )
 
     # ── Processamento ────────────────────────────────────────────────────────
@@ -282,7 +334,12 @@ async def collect_data(paths: ReconPaths, dom: str) -> ReconReport:
         reverse_dns         = rdns_raw,
         cloud_assets        = cloud_raw,
         js_secrets          = js_secrets_html,
+        vhosts              = vhosts_raw,
         params              = params_raw,
+        naabu               = naabu_raw,
+        dalfox              = dalfox_raw,
+        tlsx                = tlsx_raw,
+        crlfuzz             = crlfuzz_raw,
         dns_table           = dns_table,
         tech_stack          = tech_stack,
         screenshot_gallery  = screenshot_gallery,
@@ -320,7 +377,12 @@ def render_html(template_text: str, report: ReconReport) -> str:
         REVERSE_DNS       = report.reverse_dns,
         CLOUD_ASSETS      = report.cloud_assets,
         JS_SECRETS        = report.js_secrets,
+        VHOSTS            = report.vhosts,
         PARAMS            = report.params,
+        NAABU             = report.naabu,
+        DALFOX            = report.dalfox,
+        TLSX              = report.tlsx,
+        CRLFUZZ           = report.crlfuzz,
         VULN_CRIT         = str(report.v_crit),
         VULN_HIGH         = str(report.v_high),
         VULN_MED          = str(report.v_med),
@@ -349,7 +411,7 @@ async def main() -> None:
     report_out    = workdir / "report.html"
 
     if not template_path.exists():
-        print(f"[ERRO] Template {template_path} não encontrado.")
+        log.error(f"Template {template_path} não encontrado.")
         sys.exit(1)
 
     # 2. Estrutura de caminhos (Sessão A)
@@ -360,18 +422,18 @@ async def main() -> None:
 
     # 4. Leitura do template e renderização (Sessão C)
     try:
-        async with aiofiles.open(template_path) as f:
+        async with aiofiles.open(template_path, encoding="utf-8") as f:
             template_text = await f.read()
 
         html_out = render_html(template_text, report)
 
-        async with aiofiles.open(report_out, "w") as f:
+        async with aiofiles.open(report_out, "w", encoding="utf-8") as f:
             await f.write(html_out)
 
-        print(f"[*] Dashboard consolidado com sucesso em: {report_out}")
+        log.info(f"Dashboard consolidado com sucesso em: {report_out}")
 
     except Exception as exc:
-        print(f"[ERRO] Falha crítica ao gerar o dashboard: {exc}")
+        log.exception(f"Falha crítica ao gerar o dashboard: {exc}")
         sys.exit(1)
 
 

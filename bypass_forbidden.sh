@@ -1,12 +1,18 @@
-#!/bin/bash
-
-set -euo pipefail
+#!/usr/bin/env bash
+set -Eeuo pipefail
 IFS=$'\n\t'
+shopt -s inherit_errexit   # Bash 4.4+
 
 # Configurações
 WORDLIST="/usr/share/seclists/Discovery/Web-Content/common.txt"
 THREADS=100
-SUB=$1
+SUB="${1:-}"
+
+if [[ ! "$SUB" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$ ]]; then
+    printf "Erro: Domínio inválido '%s'\n" "$SUB" >&2
+    exit 1
+fi
+
 OUTDIR="./bypass-$SUB"
 mkdir -p "$OUTDIR"
 
