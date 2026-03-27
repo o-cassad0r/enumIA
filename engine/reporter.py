@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-reporter.py — Gerador de dashboard HTML para o projeto Enum.
+reporter.py — Gerador de dashboard HTML para o projeto enumIA.
 
 Uso: python3 reporter.py <dominio> <workdir>
 

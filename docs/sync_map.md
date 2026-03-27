@@ -1,4 +1,4 @@
-# 🔄 Project Enum: Synchronization & Dependency Map
+# 🔄 Project enumIA: Synchronization & Dependency Map
 
 Este mapa define a hierarquia de dependências do projeto. Se você alterar um arquivo em um nível superior, **DEVE** verificar e sincronizar os arquivos nos níveis inferiores afetados.
 
@@ -8,6 +8,7 @@ Este mapa define a hierarquia de dependências do projeto. Se você alterar um a
 *Arquivos que definem o comportamento global e utilitários base.*
 - **`core/utils.sh`**: Contém funções de logging, UI e traps.
 - **`setup.sh`**: Instalação de ferramentas e configuração de ambiente.
+- **`core/update_wordlists.sh`**: Sincronização delta de arsenal.
 - **`requirements.txt`**: Dependências Python.
 
 **🔄 Se alterados:** Sincronize todos os módulos em `modules/` e o orquestrador `core/enum.sh`.
@@ -29,6 +30,7 @@ Este mapa define a hierarquia de dependências do projeto. Se você alterar um a
 - **`modules/infra/intel.sh`** ➔ Gera `asn_info.txt`, `js_files.txt`, `katana_urls.txt`.
 - **`modules/fuzzing/ffuf.sh`** ➔ Gera `results.json` na pasta fuzzing.
 - **`modules/vulnerability/nuclei.sh`** ➔ Gera `vulnerabilidades.txt`.
+- **`engine/scripts/nuclei_dynamic_forge.py`** ➔ Gera templates YAML dinâmicos.
 
 **🔄 Se alterados:** Verifique se o `engine/reporter.py` ainda consegue ler os caminhos e formatos dos arquivos gerados.
 

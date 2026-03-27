@@ -1,4 +1,4 @@
-# 🤖 Enum: Recon Control Center (AGENTE.md)
+# 🤖 enumIA: Recon Control Center (AGENTE.md)
 
 Este arquivo é a bússola autoral para qualquer inteligência operando neste ecossistema.
 

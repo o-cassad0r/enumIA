@@ -1,6 +1,6 @@
-# 🛡️ Red Team Diagnostic Report: Project Enum (March 2026)
+# 🛡️ Red Team Diagnostic Report: Project enumIA (March 2026)
 
-Este diagnóstico avalia o estado atual do ecossistema **Enum** sob a ótica de um Desenvolvedor Sênior Red Teamer.
+Este diagnóstico avalia o estado atual do ecossistema **enumIA** sob a ótica de um Desenvolvedor Sênior Red Teamer.
 
 ---
 

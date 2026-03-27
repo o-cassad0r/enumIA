@@ -1,6 +1,6 @@
-# 🔄 Project Enum: Execution Routine Map
+# 🔄 Project enumIA: Execution Routine Map
 
-Este mapa descreve o ciclo de vida de uma execução completa do **Enum**. Use este guia para identificar onde inserir novas funções ou como depurar o fluxo de dados.
+Este mapa descreve o ciclo de vida de uma execução completa do **enumIA**. Use este guia para identificar onde inserir novas funções ou como depurar o fluxo de dados.
 
 ---
 
@@ -40,7 +40,15 @@ Este mapa descreve o ciclo de vida de uma execução completa do **Enum**. Use e
 
 ---
 
-## 📊 5. Fase de Conclusão (Reporting Phase)
+## 🧠 5. Fase Cognitiva (Cognitive Phase)
+*Objetivo: Aprender com os dados e evoluir o ataque.*
+1.  **Drift Analysis**: Comparação de schemas JSON coletados.
+2.  **Exploit Forging**: `nuclei_dynamic_forge.py` cria templates para IDOR/BOLA.
+3.  **Surgical Scan**: Nuclei executa apenas os novos templates forjados.
+
+---
+
+## 📊 6. Fase de Conclusão (Reporting Phase)
 *Objetivo: Transformar dados brutos em inteligência visual.*
 1.  **Data Ingestion**: `engine/reporter.py` varre o `WORKDIR` em busca de JSON/TXT.
 2.  **Schema Analysis**: Detecção de Drift estrutural e IDOR.

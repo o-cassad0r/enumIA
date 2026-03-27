@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Project Enum - Entry Point Wrapper (bash-pro)
+# Project enumIA - Entry Point Wrapper (bash-pro)
 set -Eeuo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

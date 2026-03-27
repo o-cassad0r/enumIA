@@ -32,6 +32,11 @@ trap cleanup EXIT ERR SIGINT SIGTERM
 
 check_dependencies
 
+# Optional Wordlist Update
+if [[ "${UPDATE_ARSENAL:-false}" == "true" ]]; then
+    bash "${SCRIPT_DIR}/core/update_wordlists.sh"
+fi
+
 
 main() {
     local input_domain="${1:-}"
@@ -100,6 +105,14 @@ main() {
     run_deep_intelligence "$DOMAIN" "$WORKDIR" "$SECRET_FINDER" "$MODE"
     run_edge_recon "$WORKDIR"
 
+    # PHASE 2.5: STRATEGIC BRAIN (Ollama Integration)
+    if command -v ollama &>/dev/null; then
+        draw_header "BRAIN" "Consultando Estrategista Local..."
+        python3 "${SCRIPT_DIR}/engine/scripts/agent_brain.py" "$WORKDIR"
+        echo -e "${YELLOW}[!] O conselho acima foi gerado pela IA local baseada nos achados atuais.${NC}\n"
+        sleep 3
+    fi
+
     # PHASE 3: PORT SCAN
     run_port_scan "$WORKDIR" "${naabu_opts[@]}"
 
@@ -114,6 +127,19 @@ main() {
         run_directory_fuzzing "$WORKDIR" "$TEMP_DIR" "$WORDLIST_FUZZ" "$FFUF_THREADS" "$FFUF_RATE"
     else
         log_info "Resultados de fuzzing detectados. Pulando fase."
+    fi
+
+    # PHASE 6.5: COGNITIVE FORGE (Feedback Loop)
+    draw_header "FORGE" "Iniciando Inteligência Cognitiva..."
+    mkdir -p "$WORKDIR/dynamic_templates"
+    
+    # Executa a forja baseada nos JSONs descobertos
+    if python3 "${SCRIPT_DIR}/engine/scripts/nuclei_dynamic_forge.py" "$WORKDIR/json_intelligence" "$WORKDIR/dynamic_templates"; then
+        # Se templates foram gerados, executa o Nuclei neles
+        if ls "$WORKDIR/dynamic_templates"/*.yaml &>/dev/null; then
+            log_info "Executando templates forjados cirurgicamente..."
+            nuclei -t "$WORKDIR/dynamic_templates/" -u "$DOMAIN" -silent -o "$WORKDIR/nuclei/vulnerabilidades_logicas.txt"
+        fi
     fi
 
 

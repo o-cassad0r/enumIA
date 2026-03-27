@@ -1,6 +1,6 @@
 # 🧠 Estratégia da Fase 2: Inteligência Cognitiva
 
-Esta fase eleva o projeto **Enum** de um executor de ferramentas estático para um mecanismo de aprendizado contínuo e adaptação de ataques. O foco muda de "atacar tudo" para "atacar exatamente onde dói".
+Esta fase eleva o projeto **enumIA** de um executor de ferramentas estático para um mecanismo de aprendizado contínuo e adaptação de ataques. O foco muda de "atacar tudo" para "atacar exatamente onde dói".
 
 ---
 

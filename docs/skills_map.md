@@ -1,6 +1,6 @@
-# 🗺️ Project Enum: Skills Navigation & AI Strategy Map
+# 🗺️ Project enumIA: Skills Navigation & AI Strategy Map
 
-Este documento serve como a bússola estratégica para qualquer IA que interaja com o ecossistema **Enum**. Ele define a hierarquia, o fluxo de inteligência e as diretrizes de tomada de decisão para garantir consistência operacional e eficiência tática.
+Este documento serve como a bússola estratégica para qualquer IA que interaja com o ecossistema **enumIA**. Ele define a hierarquia, o fluxo de inteligência e as diretrizes de tomada de decisão para garantir consistência operacional e eficiência tática.
 
 ---
 
@@ -27,8 +27,18 @@ A operação é dividida em **Clusters de Especialidade**, coordenados por um po
 *   **Ação**: Fuzzing avançado, evasão de L7, mimetização de TLS (L4).
 *   **Decision Gate**: Garantir sigilo (Stealth) absoluto via `dynamic-behavioral-shaper.md`.
 
-### 📊 Nível 4: Consolidação e Report (`report-architect.md`)
-*   **Trigger**: Finalização de qualquer ciclo de scan.
+### 🧠 Nível 4: Inteligência Cognitiva (`json_analysis/dynamic-exploit-forge.md`)
+*   **Trigger**: Identificação de drift estrutural ou campos sensíveis (IDOR/BOLA).
+*   **Ação**: Geração dinâmica de templates Nuclei via `nuclei_dynamic_forge.py`.
+*   **Decision Gate**: Disparar ataques cirúrgicos baseados em evidência lógica.
+
+### 🤖 Nível 6: Cérebro Agêntico Local (`active_exploitation/agentic-orchestrator.md`)
+*   **Trigger**: Finalização de fases táticas (Recon/Fuzzing).
+*   **Ação**: Análise semântica via Ollama (Llama3/DeepSeek) para tomada de decisão em tempo real.
+*   **Decision Gate**: Recomendar aprofundamento ou pivoteamento de ataque.
+
+### 📊 Nível 5: Consolidação e Report (`report-architect.md`)
+*   **Trigger**: Finalização de todos os ciclos (incluindo cognitivo).
 *   **Ação**: Agregação de dados via `reporter.py` e atualização do Dashboard Dashboard.
 
 ---

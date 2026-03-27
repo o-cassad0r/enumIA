@@ -48,8 +48,8 @@ Sempre que uma tarefa for iniciada, identifique qual cluster de Inteligência at
 *Quando a ordem for mapear os funcionários e gerar pretexto corporativo.*
 - `social-arch-grapher.md` (LinkedIn Scraping, Organogramas, E-mail patterns e HIBP Dumps)
 
-### 🧠 6. Central Brain (`/intel-nexus-correlator.md`)
-*Esta skill fica solta na base da diretoria.* Acione o `intel-nexus-correlator.md` estritamente no final do pipeline, quando você precisar consolidar os achados de todas as outras skills para desenhar o Mermaid Graph Final de Ataque (Attack Path).
+### 🧠 6. Agentic Orchestrator (`active_exploitation/agentic-orchestrator.md`)
+*Esta skill comanda a IA Local via Ollama.* Acione o `agentic-orchestrator.md` após a fase de Inteligência para obter triagem automática de portas, resumos de vulnerabilidades e ajustes táticos de threads/rate-limits baseados em comportamento de rede detectado.
 
 ---
 
@@ -59,6 +59,7 @@ Ao receber o domínio alvo do Red Teamer:
 2. **Descoberta Silenciosa**: Invocar `network_recon/` e `threat_intel/` para alargar a superfície (não faça barulho ainda).
 3. **Avaliação Semântica**: Submeter todas as coletas (`.JSON`, `.XML`) ao `json_analysis/`.
 4. **Striking**: Se houver campos que o `drift-analyzer` alertou ou portas sensíveis reveladas, enviar os endpoints ao `active_exploitation/api-endpoint-fuzzer.md`.
-5. **Relato**: Compile tudo usando o `intel-nexus-correlator.md`.
+5. **Cognitive Loop**: Consultar o `Agentic Brain` (Ollama) para priorizar os top 3 vetores de ataque.
+6. **Relato**: Compile tudo usando o `report-architect.md`.
 
 Lembre-se: Você é orquestrador Antigravity. Nunca processe grandes arquivos no próprio chat. Peça ao agente delegado correto executar o código construído e passar apenas os deltas filtrados.

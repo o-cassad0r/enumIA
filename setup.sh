@@ -9,13 +9,26 @@ source "${SCRIPT_DIR}/core/utils.sh"
 
 
 log_info "=========================================="
-log_info "[+] RECON-OPS: SETUP ULTIMATE (bash-pro) "
+log_info "[+] enumIA: SETUP ULTIMATE (bash-pro) "
 log_info "=========================================="
 
 # 1. Dependências de Sistema
 sudo apt update -y
 sudo apt install -y git curl jq golang-go build-essential python3-pip python3-venv \
     seclists dnsgen whois dnsutils chromium exiftool libpcap-dev ncurses-bin wafw00f
+
+# 1.5. Infraestrutura de IA (Ollama)
+log_info "[*] Verificando motor de IA Local (Ollama)..."
+if ! command -v ollama &> /dev/null; then
+    log_warn "[!] Ollama não detectado. Iniciando instalação..."
+    curl -fsSL https://ollama.com/install.sh | sh
+else
+    log_info "[V] Ollama já está instalado."
+fi
+
+# Baixa o modelo padrão caso não exista
+log_info "[*] Garantindo modelo estratégico (llama3:8b)..."
+ollama pull llama3:8b || log_warn "[!] Não foi possível baixar o modelo agora. Certifique-se de baixar manualmente depois: ollama pull llama3:8b"
 
 
 # 2. Configuração de PATH
