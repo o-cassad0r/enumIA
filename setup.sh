@@ -1,20 +1,22 @@
 #!/usr/bin/env bash
-set -euo pipefail
+# RECON-OPS: SETUP ULTIMATE (bash-pro)
+set -Eeuo pipefail
 IFS=$'\n\t'
+shopt -s inherit_errexit
 
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m'
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/core/utils.sh"
 
-echo -e "${GREEN}==========================================${NC}"
-echo -e "${GREEN}[+] RECON-OPS: SETUP ULTIMATE (FIXED)     ${NC}"
-echo -e "${GREEN}==========================================${NC}"
+
+log_info "=========================================="
+log_info "[+] RECON-OPS: SETUP ULTIMATE (bash-pro) "
+log_info "=========================================="
 
 # 1. Dependências de Sistema
 sudo apt update -y
 sudo apt install -y git curl jq golang-go build-essential python3-pip python3-venv \
-    seclists dnsgen whois dnsutils chromium exiftool libpcap-dev ncurses-bin
+    seclists dnsgen whois dnsutils chromium exiftool libpcap-dev ncurses-bin wafw00f
+
 
 # 2. Configuração de PATH
 GO_BIN="$HOME/go/bin"
@@ -27,10 +29,10 @@ SHELL_CONFIG="$HOME/.bashrc"
 export PATH="$GO_BIN:$PY_BIN:$PATH"
 
 # 3. Instalação de Ferramentas Go (Otimizada e Verbosa)
-echo -e "${YELLOW}[*] Validando ambiente Go...${NC}"
-go version || { echo -e "${RED}[!] Go não encontrado ou mal instalado.${NC}"; exit 1; }
+log_info "[*] Validando ambiente Go..."
+go version || { log_error "Go não encontrado ou mal instalado."; exit 1; }
 
-echo -e "${YELLOW}[*] Instalando motores Go (isso pode levar alguns minutos, aguarde)...${NC}"
+log_info "[*] Instalando motores Go (isso pode levar alguns minutos, aguarde)..."
 # Usamos -v para visibilidade e evitamos recompilação desnecessária
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
@@ -85,8 +87,7 @@ sudo nmap --script-updatedb > /dev/null
 W_DIR="$HOME/tools/enum/Wordlists"
 mkdir -p "$W_DIR"
 curl -s https://raw.githubusercontent.com/haccer/subjack/master/fingerprints.json -o "$W_DIR/fingerprints.json"
-touch "$W_DIR/wordlist_sdm.txt"
-touch "$W_DIR/wordlist_final.txt"
+
 
 # Verificação Final
 echo -e "${YELLOW}[*] Validando instalações...${NC}"
@@ -96,7 +97,7 @@ else
     echo -e "${RED}[X] Falha no cloud_enum. Tente instalar manualmente via git clone.${NC}"
 fi
 
-echo -e "${GREEN}==========================================${NC}"
-echo -e "${GREEN}[!] SETUP CONCLUÍDO!                     ${NC}"
-echo -e "${YELLOW}[*] Reinicie o terminal ou use: source $SHELL_CONFIG${NC}"
-echo -e "${GREEN}==========================================${NC}"
+log_info "=========================================="
+log_info "[!] SETUP CONCLUÍDO!                     "
+log_info "[*] Reinicie o terminal ou use: source ${SHELL_CONFIG}"
+log_info "=========================================="

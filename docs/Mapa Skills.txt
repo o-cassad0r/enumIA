@@ -1,0 +1,694 @@
+1
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista OSINT Aggregator (The Ghost), usando o que há de mais moderno e avançado em red team.
+Foco da skill: Inteligência de Fontes Abertas (Zero Footprint).
+
+Descrição (SKILL.md): ```yaml
+name: passive-osint-harvester
+description: Coleta dados sem interação direta com o alvo. Utiliza APIs de terceiros (Shodan, Censys, SecurityTrails, Wayback Machine) para mapear o histórico e a presença externa.
+
+Ação no Desenvolvimento: O agente usa esta skill para codificar módulos que consultam agregadores. Ele deve ser instruído a implementar "Exponential Backoff" e rotação de chaves de API automaticamente se encontrar rate-limits.
+
+Estratégias de Ataque:
+
+Historical Dorking: Busca versões arquivadas do robots.txt ou sitemap.xml na Wayback Machine para encontrar endpoints "esquecidos" (ex: /old-admin-v1/).
+
+Whois Correlation: Cruza dados de registro para encontrar outros domínios do mesmo proprietário (pivotamento de infraestrutura).
+
+
+2
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Dns-perimeter-mapper, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Expansão de Superfície via DNS.
+
+Descrição (SKILL.md):
+
+name: dns-perimeter-mapper
+description: Realiza enumeração de subdomínios e análise de registros DNS. Suporta Certificate Transparency (CT) logs e Zone Transfers (AXFR) quando mal configurados.
+
+Ação no Desenvolvimento: Auxilia na criação de algoritmos de permutação de nomes (ex: dev-, test-, api-) que são alimentados por modelos probabilísticos do agente para prever nomes de subdomínios prováveis.
+
+Estratégias de Ataque:
+
+CT-Log Monitoring: Monitora logs de certificados em tempo real para detectar novos subdomínios no instante em que o SSL é emitido.
+
+Subdomain Takeover: Verifica automaticamente se registros CNAME apontam para serviços externos (S3, Heroku, etc.) que foram desativados, permitindo a reivindicação do subdomínio.
+
+3
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Vcs-secret-miner, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Identificação de vazamentos em repositórios (GitHub/GitLab/Bitbucket).
+
+Descrição (SKILL.md):
+
+name: vcs-secret-miner
+description: Analisa repositórios públicos e históricos de commits em busca de chaves de API, credenciais hardcoded e arquivos de configuração (.env, .git/config).
+Ação no Desenvolvimento: O agente utiliza esta skill para construir regex avançadas e lógicas de "Entropy Check" na ferramenta, garantindo que o Recon identifique segredos que scanners comuns ignoram.
+
+Estratégias de Ataque:
+
+Commit Rollback: Não apenas olha o estado atual, mas analisa o histórico de commits (diffs) em busca de segredos que foram "apagados" mas permanecem no histórico do Git.
+
+Organization Crawling: Mapeia todos os forks de funcionários da empresa alvo para encontrar repositórios pessoais que contenham código corporativo.
+
+4
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Cloud-leak-inspector, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Ativos em Nuvem (S3, Azure Blobs, GCP Buckets).
+
+Descrição (SKILL.md):
+name: cloud-leak-inspector
+description: Identifica e testa permissões em buckets de armazenamento em nuvem e instâncias de computação expostas.
+Ação no Desenvolvimento: O agente gera scripts que utilizam o CLI nativo de cada provedor (AWS/Azure/GCP) para validar permissões de "List" e "Read" de forma rápida e silenciosa.
+
+Estratégias de Ataque:
+
+Bucket Brute-forcing: Usa o nome da empresa + sufixos comuns (ex: -backup, -prod, -logs) para descobrir buckets não documentados.
+
+Metadata Service Attack (SSRF Prep): Identifica endpoints que podem ser vulneráveis a SSRF para exfiltrar metadados da instância (IMDSv2 bypass strategies).
+
+
+5
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Stack-fingerprinter-pro, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Identificação de Tecnologias e Versões.
+
+Descrição (SKILL.md):
+
+name: stack-fingerprinter-pro
+description: Analisa headers HTTP, cookies, favicon hashes e estrutura do DOM para identificar CMS, frameworks e versões de servidores.
+Ação no Desenvolvimento: O agente integra bibliotecas de fingerprinting (como Wappalyzer/JARM) e cria um banco de dados dinâmico de assinaturas que a ferramenta de recon usará.
+
+Estratégias de Ataque:
+
+JARM Fingerprinting: Usa o hash TLS para identificar o stack do servidor atrás de um proxy, revelando a infraestrutura real.
+
+Patch Gap Analysis: Cruza a versão detectada com bases de CVEs recentes (2025/2026) para sugerir vetores de exploração imediatos.
+
+6
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Api-endpoint-fuzzer, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Mapeamento de APIs e Lógica de Negócio.
+
+Descrição (SKILL.md):
+
+name: api-endpoint-fuzzer
+description: Descobre endpoints de API ocultos, documentação Swagger/OpenAPI e testa métodos HTTP não convencionais (PUT, DELETE, OPTIONS).
+Ação no Desenvolvimento: O agente cria geradores de wordlists "context-aware" que baseiam os nomes dos endpoints no setor da empresa (ex: se for fintech, foca em /v1/transaction).
+
+Estratégias de Ataque:
+
+BOLA/IDOR Discovery: Identifica padrões de IDs em URLs e JSONs para mapear a lógica de acesso a objetos.
+
+Version Discovery: Tenta acessar /v0/, /v2/ ou /beta/ para encontrar APIs menos protegidas ou em fase de teste.
+
+7
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Waf-evasion-adapter, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Ofuscação e Bypass de Proteções.
+
+Descrição (SKILL.md):
+name: waf-evasion-adapter
+description: Ajusta o comportamento do tráfego para mimetizar usuários legítimos, rotacionando IPs, User-Agents e padrões de jitter.
+Ação no Desenvolvimento: O agente implementa lógica de proxy-mesh e técnicas de "HTTP Parameter Pollution" (HPP) para que a ferramenta de recon não seja bloqueada por WAFs como Cloudflare ou Akamai.
+
+Estratégias de Ataque:
+
+Header Jittering: Altera aleatoriamente headers como X-Forwarded-For e Accept-Language em cada requisição.
+
+Browser Emulation: Em casos de desafios de JavaScript, o agente aciona instâncias headless (Playwright/Puppeteer) para resolver o desafio e extrair cookies de sessão válidos.
+
+8
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Social-arch-grapher, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Recon Humano e Social Engineering Context.
+
+Descrição (SKILL.md):
+
+name: social-arch-grapher
+description: Mapeia organogramas através de redes profissionais e gera padrões de e-mail corporativo (ex: nome.sobrenome@alvo.com).
+Ação no Desenvolvimento: Cria scripts de scraping para plataformas como LinkedIn (respeitando limites para evitar ban) e integra APIs de validação de e-mail.
+
+Estratégias de Ataque:
+
+Key-Person Identification: Identifica o time de TI e DevOps para focar o recon em ferramentas que eles costumam usar (ex: procurar por instâncias de Jira ou Jenkins do alvo).
+
+Leaked Credential Pivot: Verifica se os e-mails encontrados aparecem em dumps de vazamentos de dados históricos.
+
+9
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Network-perimeter-scanner, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Portas e Serviços de Baixo Nível.
+
+Descrição (SKILL.md):
+
+name: network-perimeter-scanner
+description: Realiza varreduras de portas TCP/UDP de forma assíncrona e identifica banners de serviços.
+Ação no Desenvolvimento: O agente utiliza o antigravity.terminal para orquestrar ferramentas como nmap ou masscan em alta velocidade, processando o output em tempo real para alimentar outras agentes.
+
+Estratégias de Ataque:
+
+Service Tunneling Detection: Identifica serviços rodando em portas não convencionais (ex: SSH na 443).
+
+Default Credential Spray: Se encontrar serviços como Redis, MongoDB ou Telnet, o agente tenta automaticamente um set minimalista de credenciais padrão.
+
+10
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Intel-nexus-correlator, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Síntese e Graphing de Ativos.
+
+Descrição (SKILL.md):
+name: intel-nexus-correlator
+description: Atua como o cérebro do diretório, correlacionando dados de todas as outras skills para gerar um gráfico de ataque priorizado.
+Ação no Desenvolvimento: Esta skill é responsável por gerar o Artifact final no Antigravity. Ela formata os dados em JSON, Markdown ou gráficos Mermaid para que o operador humano tenha uma visão clara da superfície de ataque.
+
+Estratégias de Ataque:
+
+Attack Path Analysis: Identifica que o "Subdomínio A" (achado pela DNS-mapper) roda um "Jenkins Antigo" (achado pela Fingerprinter) com "Segredos de AWS" no histórico de commits (achado pela VCS-miner), criando o caminho crítico de invasão.
+
+
+11
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Mobile-app-decompiler, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Extração de segredos de binários (APK/IPA).
+
+Descrição (SKILL.md):
+name: mobile-app-decompiler
+description: Baixa aplicativos móveis de lojas públicas ou repositórios e realiza engenharia reversa para extrair endpoints de API, chaves de criptografia e constantes hardcoded.
+Ação no Desenvolvimento: O agente utiliza esta skill para integrar ferramentas como jadx ou apktool via linha de comando. Ele automatiza a busca por strings que contenham padrões de URLs de staging ou beta, que geralmente têm menos proteção que a produção.
+
+Estratégias de Ataque:
+
+Firebase/S3 Misconfiguration: Localiza URLs de bancos de dados Firebase ou buckets S3 embutidos no código que podem ter permissões de leitura/escrita abertas.
+
+Certificate Pinning Analysis: Identifica se o app usa pinning, preparando o terreno para um ataque de interceptação (MITM) posterior.
+
+
+12
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Delta-diff-analyzer, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Recon Contínuo e Detecção de Mudanças.
+
+Descrição (SKILL.md):
+name: delta-diff-analyzer
+description: Compara os resultados do recon atual com varreduras anteriores para identificar novos ativos, mudanças em registros DNS ou novos arquivos em servidores.
+Ação no Desenvolvimento: O agente implementa uma lógica de banco de dados (SQLite ou vetorial) para armazenar "snapshots". Ele cria gatilhos (webhooks) que alertam o Red Teamer no exato momento em que um novo subdomínio vpn.alvo.com aparece.
+
+Estratégias de Ataque:
+
+First-to-Strike: Ataca ativos no momento em que são publicados, muitas vezes antes de as equipes de Blue Team aplicarem políticas de segurança ou firewalls.
+
+DNS Expiration Tracking: Monitora se domínios anteriormente usados pela empresa expiraram, permitindo o registro malicioso para phishing ou sequestro de tráfego.
+
+
+13
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Visual-dom-snapshotter, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Recon Visual e Identificação de Login Portals.
+
+Descrição (SKILL.md):
+name: visual-dom-snapshotter
+description: Utiliza browsers headless para tirar screenshots de centenas de subdomains simultaneamente e usa IA para classificar o que é "página padrão", "portal de login" ou "erro 403".
+Ação no Desenvolvimento: O agente configura o antigravity.browser para renderizar as páginas. Ele pode usar modelos de visão (como Gemini 1.5 Pro ou Flash) para "olhar" a imagem e dizer: "Isso parece um painel administrativo do Grafana sem autenticação".
+
+Estratégias de Ataque:
+
+Low-Hanging Fruit Prioritization: Em vez de olhar 1000 subdomínios, o Red Teamer foca apenas nos 5 que a skill classificou como "Login Interface" ou "Directory Listing".
+
+Watermark/Brand Analysis: Identifica se a página pertence a um terceiro (SaaS) ou se é infraestrutura própria baseada no design.
+
+14
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Supply-chain-shadow-mapper, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Terceiros e Ecossistema de SaaS.
+
+Descrição (SKILL.md):
+name: supply-chain-shadow-mapper
+description: Mapeia o uso de serviços de terceiros (Slack, Trello, Notion, Zendesk) através de dorks de DNS e subdomínios específicos de SaaS.
+Ação no Desenvolvimento: O agente constrói módulos que testam a existência de subdomínios como alvo.slack.com, alvo.atlassian.net ou notion.so/alvo.
+
+Estratégias de Ataque:
+
+SaaS Misconfiguration: Verifica se páginas do Notion ou boards do Trello da empresa estão configurados como "Públicos", o que é comum em times de marketing ou RH.
+
+Email Spoofing Readiness: Verifica registros SPF/DKIM para ver se serviços de terceiros podem enviar e-mails em nome do domínio principal sem proteção contra spoofing.
+
+15
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Semantic-dorking-engine, usando o que há de mais moderno e avançado em red team.
+Foco da skill:
+Foco: Google/Bing Dorking Inteligente.
+
+Descrição (SKILL.md):
+name: semantic-dorking-engine
+description: Gera e executa queries de busca avançada (Google Dorks) de forma automatizada, rotacionando dorks para evitar CAPTCHAs e extraindo links de documentos expostos (PDF, DOCX, XLSX).
+Ação no Desenvolvimento: O agente utiliza LLMs para gerar dorks criativas baseadas no nome da empresa e termos técnicos (ex: site:alvo.com filetype:sql "password"). Ele implementa lógica de parsing para extrair metadados de documentos baixados (autores, versões de software).
+
+Estratégias de Ataque:
+
+Sensitive Doc Leaks: Encontra planilhas de salários, orçamentos ou diagramas de rede que foram indexados acidentalmente.
+
+Employee Profiling: Extrai nomes de usuários e versões de Office a partir dos metadados dos arquivos encontrados, refinando a skill de social-arch-grapher.
+
+
+
+16
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Tls-persona-mimic, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Ofuscação de nível de transporte para evitar impressões digitais (JA3/JA4) de ferramentas automatizadas.
+
+Descrição (SKILL.md):
+name: tls-persona-mimic
+version: 2.1.0
+capability: transport-layer-obfuscation
+runtime: python-native-ag
+description: Mimica handshakes TLS de navegadores e dispositivos específicos para burlar sistemas de detecção de bots e WAFs de borda.
+Como a Skill age no Desenvolvimento:
+Dynamic Library Hooking: A skill intercepta as chamadas de rede da sua ferramenta e substitui a pilha TLS padrão do Python/Go por uma biblioteca customizada (como utls) que permite a manipulação de extensões ClientHello.
+
+Persona Registry: Mantém um banco de dados atualizado de Personas (ex: Chrome 124 no macOS, Firefox 115 no Linux, iOS 17 Safari). O agente escolhe a persona mais comum para o setor do alvo (ex: alvos corporativos recebem tráfego simulando Windows/Edge).
+
+Estratégias de Ataque:
+JA4/S Fingerprint Randomization: Altera a ordem das ciphers e as extensões ALPN a cada requisição para que o firewall do alvo não consiga agrupar suas requisições como vindas de uma única ferramenta.
+
+Grease Extension Injection: Injeta valores "GREASE" aleatórios no handshake, conforme definido na RFC 8701, para parecer um tráfego de navegador moderno perfeitamente legítimo.
+
+SNI Fragmentation: Fragmenta o Server Name Indication em múltiplos pacotes TCP para confundir Middleboxes que tentam filtrar tráfego baseado no domínio de destino.
+
+
+
+
+17
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Dynamic-behavioral-shaper, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Transformar o tráfego de recon linear em um padrão de comportamento humano estocástico.
+
+Descrição (SKILL.md):
+name: dynamic-behavioral-shaper
+capability: traffic-pattern-obfuscation
+mode: asynchronous-stealth
+description: Modula o tempo e a ordem das requisições de recon utilizando modelos de probabilidade para mimetizar navegação humana.
+Como a Skill age no Desenvolvimento:
+Poisson Distribution Engine: Em vez de intervalos fixos (ex: 1 req/seg), a skill calcula delays baseados na distribuição de Poisson, garantindo que o tempo entre as requisições seja natural e imprevisível.
+
+Referer Header Chaining: Constrói uma árvore de "Navegação Lógica". Se o agente vai testar /api/v1/user, a skill injeta primeiro uma requisição para a home e define o Referer corretamente, simulando um usuário que clicou em um link.
+
+Estratégias de Ataque:
+Honey-URL Avoidance: Analisa o HTML/JS em busca de links ocultos (ex: display:none) que são usados como armadilhas para bots (Honey-tokens). A skill instrui o crawler a ignorar esses endpoints.
+
+Session Warming: Realiza requisições inócuas (carregamento de imagens, CSS, fontes) antes de atingir endpoints sensíveis, "aquecendo" o cookie de sessão e a reputação do IP no WAF.
+
+User-Agent Jittering: Sincroniza a troca de User-Agent com a troca de IP do proxy, garantindo que uma "Sessão" nunca mude de identidade no meio do processo, o que é um red flag imediato para sistemas de IA de defesa.
+
+
+18
+Atue como um Desenvolvedor Sênior red team e gere uma skill extensamente detalhada, no formato "nativo" Antigravity, especialista Semantic-json-deconstructorObjetivo, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Extração cirúrgica de lógica de negócio e segredos de payloads JSON/JS.
+
+Descrição (SKILL.md):
+name: semantic-json-deconstructor
+capability: data-intelligence-extraction
+type: analysis-core
+description: Realiza análise semântica e estrutural de arquivos JSON para identificar falhas de lógica (BOLA/IDOR) e vazamentos de credenciais.
+Como a Skill age no Desenvolvimento:
+Recursive Schema Inference: Ao encontrar um JSON, a skill reconstrói o esquema (schema) e identifica campos que não são retornados normalmente, mas que existem na estrutura (Shadow Fields).
+
+Cross-Reference Mapping: Cruza dados de diferentes JSONs. Se o perfil.json tem um user_id e o config.json tem um admin_id, a skill sinaliza automaticamente uma tentativa de troca de ID para testar IDOR.
+Estratégias de Ataque:
+Mass Assignment Prediction: Identifica chaves como is_admin, role, permissions ou internal_status dentro de objetos JSON. Ela sugere ao motor de ataque o envio de payloads PUT injetando esses campos para tentar escalação de privilégios.
+
+JWT Secret Extraction: Se encontrar um JWT (JSON Web Token), a skill decodifica o cabeçalho e o payload para extrair informações do servidor e verifica se o algoritmo none ou chaves fracas estão sendo utilizadas.
+
+PII Entropy Scoring: Analisa valores de chaves desconhecidas. Se um valor tem alta entropia e formato de hash, ela tenta identificar se é uma chave de API (AWS, SendGrid, Firebase) comparando com padrões conhecidos.
+
+
+### Tabela de Orquestração das Skills no Recon
+
+| Fase do Recon | Skill Primária | Ação Específica | Resultado para o Atacante |
+| :--- | :--- | :--- | :--- |
+| **Acesso** | `tls-persona-mimic` | Handshake Chrome 124 | Bypass de WAF/Anti-bot |
+| **Varredura** | `dynamic-behavioral-shaper` | Delays aleatórios + Referers | Baixa taxa de log e bloqueio de IP |
+| **Extração** | `semantic-json-deconstructor` | Parsing de `/api/v1/internal` | Descoberta de IDs e Segredos |
+
+
+19
+
+Atue como um Desenvolvedor Sênior red team e gere skill extensamente detalhada, no formato "nativo" Antigravity, especialista  Json-deep-explorer, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Calcular a Entropia de Shannon para validar segredos reais e utilizar Heurística de Categorização para identificar Shadow APIs
+
+Descrição (SKILL.md):
+name: json-deep-explorer
+version: 3.0.1-adv
+capability: semantic-data-intelligence
+author: Nyckos-Senior-Dev
+description: |
+  Motor avançado de de-fuzzing e análise semântica de JSON. 
+  Especializado em detectar credenciais de alta entropia, PII (Brazilian context included), 
+  mapeamento de Shadow APIs e sugestão de vetores de Mass Assignment.
+strategies:
+  - Entropy-based Secret Discovery (Shannon Algorithm)
+  - PII Detection (CPF, Emails, Phone, JWT)
+  - Internal Pivot Point Discovery (Private IPs, Cloud Metadata)
+  - NoSQLi & Mass Assignment Candidate Identification
+
+
+A Implementação Nativa: explorer.py
+import json
+import re
+import math
+import google.antigravity as ad
+
+class JSONDeepExplorer:
+    def __init__(self):
+        # Padrões de Segredos (Regex avançado para 2026)
+        self.signatures = {
+            "AWS_Key": r"AKIA[0-9A-Z]{16}",
+            "JWT_Token": r"eyJ[A-Za-z0-9-_=]+\.eyJ[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*",
+            "Google_API": r"AIza[0-9A-Za-z-_]{35}",
+            "Private_IP": r"10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2[0-9]|3[0-1])\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}",
+            "PII_CPF": r"\d{3}\.\d{3}\.\d{3}-\d{2}", # Relevante para alvos brasileiros
+            "Cloud_Metadata": r"169\.254\.169\.254"
+        }
+        
+        # Palavras-chave para Mass Assignment e Shadow APIs
+        self.risk_keys = ["admin", "role", "permission", "internal", "debug", "state", "config"]
+
+    def _calculate_entropy(self, data):
+        """Calcula a entropia de Shannon para distinguir strings aleatórias (chaves) de texto comum."""
+        if not data or not isinstance(data, str): return 0
+        entropy = 0
+        for x in range(256):
+            p_x = float(data.count(chr(x))) / len(data)
+            if p_x > 0:
+                entropy += - p_x * math.log2(p_x)
+        return entropy
+
+    def _analyze_value(self, key, value, path):
+        """Analisa o valor individual em busca de riscos específicos."""
+        findings = []
+        val_str = str(value)
+
+        # 1. Verificação de Assinaturas Conhecidas
+        for name, pattern in self.signatures.items():
+            if re.search(pattern, val_str):
+                findings.append({
+                    "type": f"CRITICAL_SIGNATURE_{name}",
+                    "path": path,
+                    "confidence": "HIGH"
+                })
+
+        # 2. Análise de Entropia (Segredos não estruturados)
+        if len(val_str) > 12 and self._calculate_entropy(val_str) > 3.8:
+            # Evita falsos positivos com URLs ou datas
+            if not val_str.startswith("http") and "-" not in val_str:
+                findings.append({
+                    "type": "HIGH_ENTROPY_SECRET",
+                    "path": path,
+                    "entropy": round(self._calculate_entropy(val_str), 2)
+                })
+
+        # 3. Identificação de Candidatos a Mass Assignment
+        if any(risk in key.lower() for risk in self.risk_keys):
+            findings.append({
+                "type": "MASS_ASSIGNMENT_CANDIDATE",
+                "path": path,
+                "hint": f"Tente injetar este campo em requisições POST/PUT para escalar privilégios."
+            })
+
+        return findings
+
+    def explore(self, payload):
+        """Inicia a exploração recursiva do payload JSON."""
+        try:
+            data = json.loads(payload) if isinstance(payload, str) else payload
+            results = self._recursive_dive(data)
+            
+            # Automação de Categoria
+            category = self._categorize_json(data)
+            
+            return {
+                "category": category,
+                "findings": results,
+                "stats": {"total_keys": len(results)}
+            }
+        except Exception as e:
+            return {"error": f"Failed to parse JSON: {str(e)}"}
+
+    def _recursive_dive(self, data, path="root"):
+        results = []
+        if isinstance(data, dict):
+            for k, v in data.items():
+                current_path = f"{path}.{k}"
+                results.extend(self._analyze_value(k, v, current_path))
+                results.extend(self._recursive_dive(v, current_path))
+        elif isinstance(data, list):
+            for i, item in enumerate(data):
+                results.extend(self._recursive_dive(item, f"{path}[{i}]"))
+        return results
+
+    def _categorize_json(self, data):
+        """Identifica o propósito do arquivo para ajustar a estratégia de ataque."""
+        keys = str(data.keys()) if isinstance(data, dict) else ""
+        if "version" in keys and "dependencies" in keys: return "MANIFEST_FILE"
+        if "host" in keys or "port" in keys or "db" in keys: return "CONFIG_FILE"
+        if "data" in keys or "items" in keys: return "API_RESPONSE"
+        return "GENERIC_DATA"
+
+# Integração nativa com o agente Antigravity
+def run_skill(input_data):
+    explorer = JSONDeepExplorer()
+    report = explorer.explore(input_data)
+    
+    # Se encontrar algo crítico, o agente Antigravity gera um Artifact imediato
+    if any("CRITICAL" in f["type"] for f in report.get("findings", [])):
+        ad.create_artifact(
+            title="Sensitive Data Leak in JSON",
+            content=report,
+            severity="CRITICAL"
+        )
+    return report
+
+
+3. Detalhamento das Estratégias de Ataque Integradas
+A. Mass Assignment Probing (Avançado)
+A skill não apenas lista chaves. Ela busca por Shadow Fields. Se o seu recon capturar um GET /user/me que retorna {"id": 1, "is_internal": false}, mas a documentação da API não menciona is_internal, a skill sinaliza isso como um alvo de over-posting. O motor de ataque tentará enviar um PATCH com {"is_internal": true}.
+
+B. NoSQL Injection Identification
+Diferente de parsers comuns, esta skill observa se o JSON é profundamente aninhado. Se um campo como username aceitar um objeto em vez de uma string, a skill sugere o teste de operadores MongoDB:
+
+Payload sugerido: {"username": {"$ne": null}, "password": {"$gt": ""}}
+
+C. Endpoint Reordering & SSRF
+Ao encontrar strings que mimetizam IPs privados ou nomes de hosts internos (ex: dev.internal.local), a skill automaticamente alimenta o diretório de network-perimeter-scanner para tentar um pivotamento, assumindo que aquele JSON pode ser um vazamento de uma configuração de Service Discovery.
+
+20
+Atue como um Desenvolvedor Sênior red team e gere skill extensamente detalhada, no formato "nativo" Antigravity, especialista  Schema-drift-analyzer, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Detecção de Regressão de Segurança e Exposição de Novas Superfícies, comparar esses JSONs com versões salvas no histórico e detectar quando os desenvolvedores "esquecem" de proteger novos endpoints
+
+Descrição (SKILL.md):
+name: schema-drift-analyzer
+version: 1.2.5
+capability: temporal-delta-intelligence
+description: |
+  Analisa mudanças estruturais em endpoints e arquivos de configuração ao longo do tempo. 
+  Identifica 'Security Regressions', endpoints depreciados que voltaram à vida e 
+  novos parâmetros que ainda não possuem sanitização.
+dependencies:
+  - json-deep-explorer
+  - visual-dom-snapshotter
+
+Ação no Desenvolvimento:
+O agente deve implementar um sistema de Content-Addressable Storage (CAS) para salvar os hashes das estruturas (schemas) encontradas. Em vez de comparar o texto bruto, a skill deve converter o JSON em um "Mapa de Tipos". Se o campo user_id mudou de Integer para String, isso é um drift que pode indicar uma mudança na lógica do backend passível de bypass de autenticação.
+
+Para medir a similaridade entre duas versões de um esquema, a skill utiliza o Índice de Jaccard:
+$$J(A, B) = \frac{|A \cap B|}{|A \cup B|}$$ Onde $A$ e $B$ são os conjuntos de chaves dos JSONs. Se $J < 1.0$, o agente Antigravity dispara um alerta de "Surface Change Detected".
+
+Estratégias de Ataque (Red Team):
+Security Regression Detection:
+
+Cenário: Um endpoint /api/v1/login que retornava apenas um token JWT passa a retornar também o last_ip_address.
+
+Ataque: Indica que o time de dev alterou o DTO (Data Transfer Object) e pode ter exposto campos sensíveis acidentalmente.
+
+Zombie Endpoints Recovery:
+
+Cenário: O recon detecta que o arquivo swagger.json.bak (detectado pela skill de dorking) contém um endpoint /v0/export que não existe no swagger.json atual.
+
+Ataque: Tentar acessar o endpoint legado. Frequentemente, as proteções de WAF são removidas para rotas "desativadas", mas o código continua rodando no servidor.
+
+Shadow Parameter Fuzzing:
+
+Cenário: O drift detecta que um formulário de cadastro agora aceita um campo oculto referral_code.
+
+Ataque: Como o campo é novo, há uma alta probabilidade de que ele não tenha sido validado contra SQL Injection ou NoSQLi tão rigorosamente quanto os campos antigos.
+
+WAF Bypass via Type Mismatch:
+
+Cenário: O esquema original esperava um objeto {"config": "string"} e o novo aceita {"config": ["array"]}.
+
+Ataque: Muitos WAFs têm regras rígidas para strings, mas falham ao analisar arrays ou objetos complexos, permitindo o bypass de filtros de assinatura.
+
+Implementação do Motor de Drift: drift_engine.py
+import google.antigravity as ad
+import hashlib
+import json
+
+class SchemaDriftAnalyzer:
+    def __init__(self, db_client):
+        self.db = db_client # Referência ao banco de dados de snapshots do Antigravity
+
+    def _generate_schema_hash(self, data):
+        """Cria uma assinatura estrutural ignorando os valores, focando nos tipos e chaves."""
+        def get_structure(obj):
+            if isinstance(obj, dict):
+                return {k: get_structure(v) for k, v in obj.items()}
+            elif isinstance(obj, list):
+                return [get_structure(obj[0])] if obj else []
+            else:
+                return str(type(obj))
+        
+        struct_str = json.dumps(get_structure(data), sort_keys=True)
+        return hashlib.sha256(struct_str.encode()).hexdigest(), struct_str
+
+    def check_for_drift(self, target_id, current_payload):
+        """Compara o snapshot atual com o último salvo no diretório do agente."""
+        current_hash, current_struct = self._generate_schema_hash(current_payload)
+        
+        # Recupera o último estado conhecido do diretório .agents/snapshots/
+        last_snapshot = self.db.get_last_snapshot(target_id)
+        
+        if not last_snapshot:
+            self.db.save_snapshot(target_id, current_hash, current_struct)
+            return {"status": "NEW_TARGET", "message": "Primeiro snapshot gerado."}
+
+        if last_snapshot['hash'] != current_hash:
+            diff = self._get_diff(json.loads(last_snapshot['struct']), json.loads(current_struct))
+            
+            # Alerta o agente Antigravity para uma possível mudança de superfície
+            ad.log_event(f"DRIFT DETECTADO em {target_id}", severity="MEDIUM")
+            
+            return {
+                "status": "DRIFT_DETECTED",
+                "delta": diff,
+                "impact_score": self._calculate_impact(diff)
+            }
+            
+        return {"status": "STABLE", "message": "Nenhuma mudança na estrutura."}
+
+    def _get_diff(self, old, new):
+        """Identifica chaves adicionadas ou removidas."""
+        old_keys = set(old.keys()) if isinstance(old, dict) else set()
+        new_keys = set(new.keys()) if isinstance(new, dict) else set()
+        
+        return {
+            "added": list(new_keys - old_keys),
+            "removed": list(old_keys - new_keys)
+        }
+
+    def _calculate_impact(self, diff):
+        """Heurística para definir se a mudança é crítica para o Red Team."""
+        critical_keywords = ['admin', 'config', 'auth', 'pass', 'token', 'key']
+        impact = 0
+        for key in diff['added']:
+            if any(word in key.lower() for word in critical_keywords):
+                impact += 50 # Alta probabilidade de nova falha
+        return min(impact, 100)
+
+# O Agente chama esta skill após cada rodada do json-deep-explorer
+
+21
+
+Atue como um Desenvolvedor Sênior red team e gere skill extensamente detalhada, no formato "nativo" Antigravity, especialista  Api-endpoint-fuzzer, usando o que há de mais moderno e avançado em red team.
+Foco da skill: Fuzzing de Alta Precisão, Bypass de Lógica de Negócio e Descoberta de Parâmetros Ocultos.
+
+Descrição (SKILL.md):
+name: api-endpoint-fuzzer
+version: 4.2.0
+capability: active-vulnerability-probing
+description: |
+  Fuzzer inteligente e contextual. Utiliza os schemas detectados para realizar 
+  Type Juggling, Verb Tampering e Injeção de Parâmetros Ocultos (HPP). 
+  Minimiza ruído para evitar detecção por sistemas de análise comportamental.
+strategies:
+  - BOLA/IDOR Probabilistic Testing
+  - HTTP Verb Tampering (HEAD/PUT/OPTIONS/PATCH)
+  - Recursive Path Discovery (Sub-resource Fuzzing)
+  - Type Juggling (String to Array/Object/Null)
+
+
+Ação no Desenvolvimento:
+O agente deve atuar como um Orquestrador de Payloads. Ele recebe o output do schema-drift-analyzer (focando nos campos novos) e do json-deep-explorer (focando nos campos de risco). A skill então gera mutações baseadas no tipo de dado: se o campo espera um email, ela testa email[], null, ou strings com caracteres de controle.
+
+
+Estratégias de Ataque (Red Team):
+BOLA (Broken Object Level Authorization) Probing:
+
+Ação: Se um endpoint como /api/v1/order/123 é detectado, o fuzzer testa variações do ID (122, 124, UUIDs, 0, -1).
+
+Refinamento: Ele compara o tamanho da resposta (Content-Length) e o tempo de resposta para identificar acessos bem-sucedidos a dados de outros usuários.
+
+Verb Tampering & Method Override:
+
+Ação: Tenta acessar um endpoint GET usando POST, PUT ou DELETE.
+
+Estratégia: Injeta headers de override como X-HTTP-Method-Override: PUT para tentar bypassar restrições de firewall que só bloqueiam o método na linha de requisição, mas não no header.
+
+Recursive Sub-resource Discovery:
+
+Ação: Se encontrar /api/users, ele testa automaticamente /api/users/export, /api/users/debug, /api/users/v2.
+
+Inteligência: Usa wordlists baseadas no setor do alvo (fintech, health, e-commerce) para prever nomes de sub-recursos prováveis.
+
+HPP (HTTP Parameter Pollution):
+
+Ação: Envia o mesmo parâmetro múltiplas vezes com valores diferentes: ?id=123&id=456.
+
+Objetivo: Verificar se o backend processa o primeiro, o último ou todos, o que pode causar erros de lógica ou bypass de filtros de segurança.
+
+
+Implementação do Fuzzer: fuzzer_core.py
+import google.antigravity as ad
+import requests # Ou a biblioteca de transporte nativa do seu AG
+
+class APIEndpointFuzzer:
+    def __init__(self, target_config):
+        self.target = target_config
+        self.probes = {
+            "nosql": ['{"$gt": ""}', '{"$ne": null}'],
+            "traversal": ["../", "..%2f", "%2e%2e%2f"],
+            "type_juggling": [True, 0, [], {}, None]
+        }
+
+    def fuzz_parameter(self, endpoint, param_name, original_value):
+        """Executa mutações específicas em um parâmetro mantendo o resto do payload estável."""
+        results = []
+        
+        # Teste 1: Type Juggling
+        for probe in self.probes["type_juggling"]:
+            payload = {param_name: probe}
+            results.append(self._send_probe(endpoint, "POST", payload))
+
+        # Teste 2: BOLA/IDOR (se o valor for numérico)
+        if str(original_value).isdigit():
+            for offset in [-1, 1, 1000]:
+                new_val = int(original_value) + offset
+                results.append(self._send_probe(f"{endpoint}/{new_val}", "GET"))
+
+        return self._analyze_results(results)
+
+    def _send_probe(self, url, method, data=None):
+        # Aqui o agente Antigravity usaria a skill 'tls-persona-mimic' para enviar a req
+        # Simulando o retorno para fins de lógica:
+        response = ad.transport.send(method=method, url=url, json=data)
+        return {
+            "method": method,
+            "url": url,
+            "status": response.status_code,
+            "length": len(response.text),
+            "time": response.elapsed_time
+        }
+
+    def _analyze_results(self, results):
+        """Analisa anomalias de resposta (Diferenças de código 200 vs 403, etc)."""
+        baseline = results[0] # Assume a primeira como base
+        anomalies = []
+        for r in results[1:]:
+            if r["status"] != baseline["status"] or abs(r["length"] - baseline["length"]) > 50:
+                anomalies.append(r)
+        return anomalies
+
+# Integração: O Agente Antigravity dispara o fuzzer para cada 'added' key do schema-drift
+
+Como integrar no Fluxo de Recon:
+Input: O schema-drift-analyzer detecta que o JSON de resposta agora tem um campo debug_mode: false.
+
+Trigger: O Agente Antigravity aciona o api-endpoint-fuzzer especificamente para esse campo.
+
+Execução: O fuzzer tenta um POST para o mesmo endpoint com {"debug_mode": true}.
+
+Output: Se o status code for 200 e o conteúdo mudar drasticamente, a ferramenta gera um Critical Artifact de "Potential Privilege Escalation".
+
+Este é o "estado da arte" em recon ativo: baixo ruído, alto impacto

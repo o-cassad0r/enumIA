@@ -1,0 +1,100 @@
+Arquivos e Pastas do Projeto:
+Aqui está a listagem completa do conteúdo na pasta e:\NIS Ti\Dev\Antigravity\Recon\enum:
+
+📂 Pastas:
+.git/: Controle de versão do projeto.
+Wordlists/: Contém as listas de palavras utilizadas para enumeração de subdomínios e diretórios.
+recon_results/ (gerada em execução): Onde os resultados das varreduras são armazenados.
+📜 Scripts de Execução (Core)
+
+fuzzdirectory.sh:
+: Script principal de automação (Bash) que orquestra toda a pipeline de recon.
+
+reporter.py:
+: Motor em Python que processa os outputs das ferramentas e gera o relatório final.
+
+template.html:
+: O layout visual em HTML para o dashboard de resultados.
+
+setup.sh:
+: Script para instalação e configuração das dependências do projeto.
+🛠️ Outros Utilitários (Bash)
+
+subtakeouver.sh:
+: Focado em identificar subdomínios vulneráveis a takeover.
+
+sub_enum_full.sh:
+ & 
+
+sub_enum_intr.sh:
+: Scripts auxiliares para diferentes intensidades de enumeração.
+
+enusubdrt.sh:
+: Script de apoio para enumeração.
+
+bypass_forbidden.sh:
+: Utilitário para tentar burlar erros 403/Forbidden.
+📚 Documentação e "Local Knowledge" (Markdown)
+
+Arquivos guias locais de referência:
+
+
+ai_orchestration.md
+, 
+
+api-fuzzing-bug-bounty.md
+, 
+
+audit_and_refactor_roadmap.md
+, 
+
+implementation_plan.md
+, 
+
+modernization_proposal.md
+, 
+
+python.md
+, 
+
+recon.md
+, 
+
+red-team-tools.md
+, 
+
+scanning-tools.md
+, 
+
+security.md
+, 
+
+shellscript.md
+, 
+
+vulnerability-scanner.md
+.
+🎯 Melhores Skills para o nosso Cenário:
+Para otimizar, auditar e refatorar este projeto de Reconnaissance e Red Team, as seguintes Skills do sistema são as mais poderosas e recomendadas:
+
+1. 🛡️ Segurança e Auditoria:
+007: Essencial para revisão de segurança, hardening contra injeção de comandos e análise de riscos nos scripts.
+red-team-tactics & red-team-tools: Fornecem as melhores metodologias de mercado para integrar novas ferramentas e técnicas de exploração à sua pipeline.
+
+2. 💻 Excelência Técnica (Core):
+bash-pro & bash-defensive-patterns: Indispensáveis para refatorar o 
+
+fuzzdirectory.sh:
+, garantindo que ele não quebre com caracteres especiais, trate erros de subshells e gerencie processos em background de forma limpa.
+
+python-pro: Ideal para refatorar o reporter.py:
+ usando tipagem moderna (Type Hints) e manipulação eficiente de JSON/Arquivos.
+
+3. 🧹 Qualidade e Limpeza:
+clean-code: Para garantir que o código seja legível e fácil de manter por terceiros.
+codebase-audit-pre-push: Uma ótima skill para rodar antes de um commit, limpando lixo e verificando falhas óbvias.
+
+4. 🎨 Visual e Reporting:
+ui-ux-pro-max & frontend-developer: Perfeitas para levar o arquivo template.html ao próximo nível, transformando-o em um dashboard interativo com filtros, gráficos e modo escuro premium.
+Nota: Não foram detectados workflows ou skills instalados especificamente dentro das pastas do projeto (como .agents), o que significa que estamos utilizando as skills globais para operar sobre o código.
+Devemos criar os workflow e as skill's local para automatizar tarefas e melhorar o desenvolvimento economizando tokens.
